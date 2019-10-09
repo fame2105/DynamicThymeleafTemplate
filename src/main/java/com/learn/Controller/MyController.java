@@ -55,14 +55,25 @@ public class MyController {
         return processedTemplate;
     }
 
-    // Will use ClassLoaderTemplateResolver to resolve the template in this case, since help.html is present in the classpath
+    // Will use ClassLoaderTemplateResolver to resolve the template in this case, since help2.html is present in the classpath
     @GetMapping("/try")
-    public String displayStaticContent(){
+    public String displayStaticContent() {
 
         Context context = new Context();
         context.setVariable("message", "Fame");
 
         String processedTemplate = templateEngine.process("help", context);
+        return processedTemplate;
+    }
+
+    // Will use ClassLoaderTemplateResolver to resolve the template in this case, since help2.html is present in the classpath
+    @GetMapping("/try2")
+    public String displayStaticContent2() {
+
+        Context context = new Context();
+        context.setVariable("message", "Fame");
+
+        String processedTemplate = templateEngine.process("mail/help2", context);
         return processedTemplate;
     }
 }
