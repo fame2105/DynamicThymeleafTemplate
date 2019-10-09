@@ -42,5 +42,4 @@ public class ThymeleafConfig implements WebMvcConfigurer{
         templateResolver.setOrder(2);
         return templateResolver;
     }
-
 }
