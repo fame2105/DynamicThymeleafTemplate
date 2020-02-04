@@ -17,6 +17,7 @@ import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 import org.thymeleaf.templateresolver.StringTemplateResolver;
 
 import javax.swing.*;
+import java.util.Arrays;
 
 @RequestMapping("/api")
 @RestController
@@ -74,6 +75,34 @@ public class MyController {
         context.setVariable("message", "Fame");
 
         String processedTemplate = templateEngine.process("mail/help2", context);
+        return processedTemplate;
+    }
+
+    @GetMapping("/array")
+    public String arrayOfObjectInlineExpressionDemo() {
+
+        Patient patient = new Patient();
+        patient.setName("Michael Corvus");
+        patient.setOtherPatientDetails("Patient is a Vampire and Wolf hybrid");
+
+        Practitioner practitioner1 = new Practitioner();
+        practitioner1.setName("Dr. Dread1");
+        practitioner1.setSpeciality("Starred in Teen Wolf 1");
+
+        Practitioner practitioner2 = new Practitioner();
+        practitioner2.setName("Dr. Dread2");
+        practitioner2.setSpeciality("Starred in Teen Wolf 2");
+
+        patient.setReferences(Arrays.asList(practitioner1, practitioner2));
+
+        NoteTemplate note = new NoteTemplate();
+        note.setNoteTemplateContent("[# th:each=\"reference : ${patient.references}\"]\n" +
+                "   - [(${reference.name})]. [(${reference.speciality})] [/]");
+
+        Context context = new Context();
+        context.setVariable("patient", patient);
+
+        String processedTemplate = templateEngine.process(note.getNoteTemplateContent(), context);
         return processedTemplate;
     }
 }
